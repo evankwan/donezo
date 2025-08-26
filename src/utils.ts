@@ -1,1 +1,1 @@
-export const TODO_STORAGE_KEY = "donezo.todos"
+export const TODO_STORAGE_KEY = "donezo.todos";

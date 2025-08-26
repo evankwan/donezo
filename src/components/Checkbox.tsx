@@ -1,4 +1,4 @@
-import { useId } from "react"
+import { useId } from "react";
 
 type Props = {
   checked: boolean;
@@ -7,14 +7,14 @@ type Props = {
 };
 
 export default function Checkbox({ checked, onChange, className = "" }: Props) {
-  const id = useId()
+  const id = useId();
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === " " || e.key === "Enter") {
-      e.preventDefault()
-      onChange(!checked)
+      e.preventDefault();
+      onChange(!checked);
     }
-  }
+  };
 
   return (
     <label
@@ -31,9 +31,7 @@ export default function Checkbox({ checked, onChange, className = "" }: Props) {
         onChange={(e) => onChange(e.target.checked)}
         className="sr-only"
       />
-      <span
-        className="w-4 h-4 rounded border border-[#333] flex items-center justify-center transition-colors bg-[#f9f9f9]"
-      >
+      <span className="w-4 h-4 rounded border border-[#333] flex items-center justify-center transition-colors bg-[#f9f9f9]">
         {checked && (
           <svg
             className="w-3 h-3 text-[#333]"
