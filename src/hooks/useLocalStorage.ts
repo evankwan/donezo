@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export default function useLocalStorage<T>(key: string, defaultValue: T) {
+export default function useLocalStorage<T>(key: string, defaultValue: T): [state: T, setter: React.Dispatch<React.SetStateAction<T>>] {
     const [storedValue, setStoredValue] = useState<T>(() => {
         try {
             const item = window.localStorage.getItem(key)

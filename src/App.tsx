@@ -42,7 +42,7 @@ function App() {
   };
   return (
     <>
-      <div className="w-full h-full grid grid-cols-1 gap-4">
+      <div className="w-full h-full grid grid-cols-1 gap-4 !py-4">
         <div className="p-4 col-span-full">
           <h1 className="text-2xl font-bold">donezo</h1>
         </div>

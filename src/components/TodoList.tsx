@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function TodoList(props: Props) {
-  // const isTodoOpen = (todo: Todo) => todo.status === TodoStatus.OPEN;
+  const isTodoOpen = (todo: Todo) => todo.status === TodoStatus.OPEN;
 
   const toggleTodoStatus = (idToUpdate: number, checked: boolean): void => {
     const newTodos = [...props.todos];
@@ -22,7 +22,7 @@ export default function TodoList(props: Props) {
   };
 
   const todoListItems = props.todos
-    // .filter((todo) => isTodoOpen(todo))
+    .filter((todo) => isTodoOpen(todo))
     .map((todo) => {
       return (
         <li
@@ -33,7 +33,7 @@ export default function TodoList(props: Props) {
             checked={todo.status === TodoStatus.COMPLETED}
             onChange={(checked) => toggleTodoStatus(todo.id, checked)}
           />
-          <p>{todo.name}</p>
+          <p className="w-full truncate">{todo.name}</p>
         </li>
       );
     });
