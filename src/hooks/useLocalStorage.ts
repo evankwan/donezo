@@ -3,7 +3,7 @@ import { useState } from "react";
 export default function useLocalStorage<T>(
   key: string,
   defaultValue: T,
-): [state: T, setter: React.Dispatch<React.SetStateAction<T>>] {
+): [state: T, setter: (val: T) => T | undefined] {
   const [storedValue, setStoredValue] = useState<T>(() => {
     try {
       const item = window.localStorage.getItem(key);
@@ -14,7 +14,7 @@ export default function useLocalStorage<T>(
     }
   });
 
-  const setValue = (value: T) => {
+  const setValue = (value: T): T | undefined => {
     try {
       window.localStorage.setItem(key, JSON.stringify(value));
       setStoredValue(value); // called second so we only update UI if saving is successful, mimicking API behaviour

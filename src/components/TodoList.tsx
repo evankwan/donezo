@@ -1,12 +1,10 @@
-import type { Dispatch, SetStateAction } from "react";
-
 import Checkbox from "./Checkbox.tsx";
 
 import { type Todo, TodoStatus } from "../types/todo";
 
 type Props = {
   todos: Todo[];
-  setTodos: Dispatch<SetStateAction<Todo[]>>;
+  setTodos: (val: Todo[]) => Todo[] | undefined;
 };
 
 export default function TodoList(props: Props) {
