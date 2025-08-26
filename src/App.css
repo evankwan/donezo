@@ -11,17 +11,3 @@ body > * {
   max-width: 768px;
   width: 85%;
 }
-
-.top-bar {
-  padding: 1rem;
-}
-
-form {
-  width: 100%;
-}
-
-input {
-  border: none;
-  border-bottom: 1px solid #333;
-  background-color: inherit;
-}
