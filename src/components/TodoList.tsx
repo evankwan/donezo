@@ -1,26 +1,42 @@
-import { type Todo, TodoStatus } from "../types/todo"
+import type { Dispatch, SetStateAction } from "react";
+
+import Checkbox from "./Checkbox.tsx";
+
+import { type Todo, TodoStatus } from "../types/todo";
 
 type Props = {
-    todos: Todo[];
-}
+  todos: Todo[];
+  setTodos: Dispatch<SetStateAction<Todo[]>>;
+};
 
 export default function TodoList(props: Props) {
-  const isTodoOpen = (todo: Todo) => todo.status === TodoStatus.OPEN
-  const todoList = props.todos
-    .filter(todo => isTodoOpen(todo))
-      .map((todo) => {
+  const isTodoOpen = (todo: Todo) => todo.status === TodoStatus.OPEN;
+
+  const toggleTodoStatus = (idToUpdate: number, checked: boolean): void => {
+    const newTodos = [...props.todos];
+    const todoIndexToUpdate = newTodos.findIndex(({ id }) => id === idToUpdate);
+    newTodos[todoIndexToUpdate].status = checked
+      ? TodoStatus.COMPLETED
+      : TodoStatus.OPEN;
+    props.setTodos(newTodos);
+  };
+
+  const todoListItems = props.todos
+    .filter((todo) => isTodoOpen(todo))
+    .map((todo) => {
       return (
-        <li key={todo.id}>
-          <input
-            type="checkbox"
+        <li
+          key={todo.id}
+          className="w-full flex flex-row gap-2 justify-start items-center"
+        >
+          <Checkbox
+            checked={todo.status === TodoStatus.COMPLETED}
+            onChange={(checked) => toggleTodoStatus(todo.id, checked)}
           />
           <p>{todo.name}</p>
         </li>
-      )
-    })
-  return (
-    <ul>
-      {todoList}
-    </ul>
-  )
+      );
+    });
+
+  return <ul>{todoListItems}</ul>;
 }
