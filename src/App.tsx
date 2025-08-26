@@ -2,14 +2,23 @@ import React, { useState, useRef } from "react";
 
 import TodoList from "./components/TodoList";
 
+import useLocalStorage from "./hooks/useLocalStorage";
+
+import { TODO_STORAGE_KEY } from "./utils"
+
 import { TodoStatus } from "./types/todo";
 import type { Todo } from "./types/todo";
 
 import "./App.css";
 
 function App() {
-  const [todos, setTodos] = useState([] as Todo[]);
-  const [nextTodoId, setNextTodoId] = useState(0);
+  const [todos, setTodos] = useLocalStorage<Todo[]>(TODO_STORAGE_KEY, []);
+  const [nextTodoId, setNextTodoId] = useState(() => {
+    if (todos.length === 0) {
+      return 0
+    }
+    return (todos as Todo[])[todos.length - 1].id + 1
+  });
   const inputRef = useRef<HTMLInputElement>(null);
 
   const resetTodoInput = () => (inputRef.current!.value = "");
@@ -26,9 +35,8 @@ function App() {
       status: TodoStatus.OPEN,
     };
 
-    setTodos((state) => {
-      return [...state, newTodo];
-    });
+    const newTodos: Todo[] = [...todos, newTodo]
+    setTodos(newTodos);
     setNextTodoId(nextTodoId + 1);
     resetTodoInput();
   };
