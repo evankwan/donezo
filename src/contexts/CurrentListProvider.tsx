@@ -7,14 +7,15 @@ export interface _CurrentListContextInterface {
   setIsShowingCompletedItems: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export type CurrentListContextValue = _CurrentListContextInterface
+export type CurrentListContextValue = _CurrentListContextInterface;
 
-const CurrentListContext: React.Context<CurrentListContextValue> = createContext<CurrentListContextValue>({
-  currentList: null,
-  setCurrentList: () => {},
-  isShowingCompletedItems: false,
-  setIsShowingCompletedItems: () => {},
-});
+const CurrentListContext: React.Context<CurrentListContextValue> =
+  createContext<CurrentListContextValue>({
+    currentList: null,
+    setCurrentList: () => {},
+    isShowingCompletedItems: false,
+    setIsShowingCompletedItems: () => {},
+  });
 
 const CurrentListProvider: React.FC<{ children: React.ReactNode }> = ({
   children,

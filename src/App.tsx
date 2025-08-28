@@ -21,14 +21,8 @@ function App() {
       <CurrentListProvider>
         <div className="w-full h-full grid grid-cols-1 gap-4 !py-4">
           <Header />
-          <Form
-            todos={todos}
-            setTodos={setTodos}
-          />
-          <TodoList
-            todos={todos}
-            setTodos={setTodos}
-          />
+          <Form todos={todos} setTodos={setTodos} />
+          <TodoList todos={todos} setTodos={setTodos} />
         </div>
       </CurrentListProvider>
     </>

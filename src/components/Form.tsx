@@ -9,7 +9,7 @@ interface Props {
 }
 const Form: React.FC<Props> = ({ todos, setTodos }) => {
   const inputRef = useRef<HTMLInputElement>(null);
-  
+
   const [nextTodoId, setNextTodoId] = useState(() => {
     if (todos.length === 0) {
       return 0;
@@ -48,7 +48,7 @@ const Form: React.FC<Props> = ({ todos, setTodos }) => {
         />
       </form>
     </div>
-  )
-}
+  );
+};
 
 export default Form;
