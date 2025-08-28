@@ -1,33 +1,32 @@
-import React from "react";
-
 import Checkbox from "./Checkbox.tsx";
 
-import { useCurrentListProvider } from "../contexts/CurrentListProvider";
+import { useTodosProvider } from "../contexts/TodosProvider";
 
 import { type Todo, TodoStatus } from "../types/todo";
 
-type Props = {
-  todos: Todo[];
-  setTodos: (val: Todo[]) => Todo[] | undefined;
-};
-
-const TodoList: React.FC<Props> = (props: Props) => {
-  const { isShowingCompletedItems } = useCurrentListProvider();
+const TodoList = () => {
+  const { todos, setTodos } = useTodosProvider();
+  const { isShowingCompletedItems } = useTodosProvider();
   const isTodoOpen = (todo: Todo) => todo.status === TodoStatus.OPEN;
 
-  const toggleTodoStatus = (idToUpdate: number, checked: boolean): void => {
-    const newTodos = [...props.todos];
+  const toggleTodoStatus = async (
+    idToUpdate: number,
+    checked: boolean,
+  ): Promise<void> => {
+    const newTodos = [...todos];
     const todoIndexToUpdate = newTodos.findIndex(({ id }) => id === idToUpdate);
     newTodos[todoIndexToUpdate].status = checked
       ? TodoStatus.COMPLETED
       : TodoStatus.OPEN;
-    props.setTodos(newTodos);
+    await setTodos(newTodos);
   };
 
-  const todoListItems = props.todos
-    .filter((todo) => (isShowingCompletedItems ? true : isTodoOpen(todo)))
-    .sort((_, b) => (isShowingCompletedItems ? (isTodoOpen(b) ? 1 : -1) : 1))
-    .map((todo) => {
+  const todoListItems = todos
+    .filter((todo: Todo) => (isShowingCompletedItems ? true : isTodoOpen(todo)))
+    .sort((_: Todo, b: Todo) =>
+      isShowingCompletedItems ? (isTodoOpen(b) ? 1 : -1) : 1,
+    )
+    .map((todo: Todo) => {
       return (
         <li
           key={todo.id}

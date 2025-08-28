@@ -2,7 +2,7 @@
 
 - a simple todo app designed to showcase my skills as a dev
 
-## To come
+## To come (not necessarily in this order)
 
 - add sub-lists
 - animations when completing an item
@@ -10,3 +10,5 @@
 - modify structure of code to support api interface
 - better styling
 - tests
+- favicon
+- bundling and stuff

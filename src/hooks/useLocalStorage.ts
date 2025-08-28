@@ -3,16 +3,30 @@ import { useState } from "react";
 export default function useLocalStorage<T>(
   key: string,
   defaultValue: T,
-): [state: T, setter: (val: T) => T | undefined] {
-  const [storedValue, setStoredValue] = useState<T>(() => {
+): [state: T, setter: (val: T) => T | undefined, getter: () => T | undefined] {
+  const _getValue = (): T => {
     try {
       const item = window.localStorage.getItem(key);
-      return item ? JSON.parse(item) : defaultValue;
+      console.log("from ls hook state init", item);
+      if (item) {
+        const state = JSON.parse(item);
+        return state;
+      }
+      return defaultValue;
     } catch (error) {
       console.error(error);
       return defaultValue;
     }
+  };
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    return _getValue();
   });
+  const getValue = () => {
+    const value = _getValue();
+    console.log("from ls hook getValue", value);
+    if (value) setStoredValue(value);
+    return value;
+  };
 
   const setValue = (value: T): T | undefined => {
     try {
@@ -24,5 +38,5 @@ export default function useLocalStorage<T>(
     }
   };
 
-  return [storedValue, setValue];
+  return [storedValue, setValue, getValue];
 }

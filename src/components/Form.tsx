@@ -1,13 +1,12 @@
 import React, { useRef, useState } from "react";
 
+import { useTodosProvider } from "../contexts/TodosProvider";
+
 import { TodoStatus } from "../types/todo";
 import type { Todo } from "../types/todo";
 
-interface Props {
-  todos: Todo[];
-  setTodos: (val: Todo[]) => Todo[] | undefined;
-}
-const Form: React.FC<Props> = ({ todos, setTodos }) => {
+const Form = () => {
+  const { todos, setTodos } = useTodosProvider();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [nextTodoId, setNextTodoId] = useState(() => {
@@ -19,7 +18,7 @@ const Form: React.FC<Props> = ({ todos, setTodos }) => {
 
   const resetTodoInput = () => (inputRef.current!.value = "");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!inputRef.current?.value) {
@@ -32,7 +31,7 @@ const Form: React.FC<Props> = ({ todos, setTodos }) => {
     };
 
     const newTodos: Todo[] = [...todos, newTodo];
-    setTodos(newTodos);
+    await setTodos(newTodos);
     setNextTodoId(nextTodoId + 1);
     resetTodoInput();
   };

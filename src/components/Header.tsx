@@ -1,8 +1,8 @@
-import { useCurrentListProvider } from "../contexts/CurrentListProvider";
+import { useTodosProvider } from "../contexts/TodosProvider";
 
 const Header = () => {
   const { isShowingCompletedItems, setIsShowingCompletedItems } =
-    useCurrentListProvider();
+    useTodosProvider();
 
   const handleClick = () => {
     setIsShowingCompletedItems(!isShowingCompletedItems);
