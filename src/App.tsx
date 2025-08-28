@@ -44,7 +44,7 @@ function App() {
     <>
       <div className="w-full h-full grid grid-cols-1 gap-4 !py-4">
         <div className="p-4 col-span-full">
-          <h1 className="text-2xl font-bold">donezo</h1>
+          <h1 className="text-[4rem] font-bold">DONEZO</h1>
         </div>
         <div className="p-4 w-full col-span-full">
           <form className="w-full" onSubmit={handleSubmit}>

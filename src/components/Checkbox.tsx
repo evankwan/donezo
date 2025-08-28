@@ -1,12 +1,12 @@
-import { useId } from "react";
+import React, { useId } from "react";
 
-type Props = {
+interface Props {
   checked: boolean;
   onChange: (checked: boolean) => void;
   className?: string;
-};
+}
 
-export default function Checkbox({ checked, onChange, className = "" }: Props) {
+const Checkbox: React.FC<Props> = ({ checked, onChange, className = "" }) => {
   const id = useId();
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -51,4 +51,6 @@ export default function Checkbox({ checked, onChange, className = "" }: Props) {
       </span>
     </label>
   );
-}
+};
+
+export default Checkbox;

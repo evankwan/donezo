@@ -1,3 +1,5 @@
+import React from "react";
+
 import Checkbox from "./Checkbox.tsx";
 
 import { type Todo, TodoStatus } from "../types/todo";
@@ -7,7 +9,7 @@ type Props = {
   setTodos: (val: Todo[]) => Todo[] | undefined;
 };
 
-export default function TodoList(props: Props) {
+const TodoList: React.FC<Props> = (props: Props) => {
   const isTodoOpen = (todo: Todo) => todo.status === TodoStatus.OPEN;
 
   const toggleTodoStatus = (idToUpdate: number, checked: boolean): void => {
@@ -37,4 +39,6 @@ export default function TodoList(props: Props) {
     });
 
   return <ul>{todoListItems}</ul>;
-}
+};
+
+export default TodoList;
