@@ -1,16 +1,36 @@
 import React, { createContext, useState, useContext } from "react";
 
-const CurrentListContext = createContext<{
+export interface _CurrentListContextInterface {
   currentList: any;
   setCurrentList: React.Dispatch<React.SetStateAction<any>>;
-} | null>(null);
+  isShowingCompletedItems: boolean;
+  setIsShowingCompletedItems: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export type CurrentListContextValue = _CurrentListContextInterface
+
+const CurrentListContext: React.Context<CurrentListContextValue> = createContext<CurrentListContextValue>({
+  currentList: null,
+  setCurrentList: () => {},
+  isShowingCompletedItems: false,
+  setIsShowingCompletedItems: () => {},
+});
 
 const CurrentListProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [currentList, setCurrentList] = useState(null);
+  const [currentList, setCurrentList] = useState("");
+  const [isShowingCompletedItems, setIsShowingCompletedItems] = useState(false);
+
   return (
-    <CurrentListContext value={{ currentList, setCurrentList }}>
+    <CurrentListContext
+      value={{
+        currentList,
+        setCurrentList,
+        isShowingCompletedItems,
+        setIsShowingCompletedItems,
+      }}
+    >
       {children}
     </CurrentListContext>
   );
