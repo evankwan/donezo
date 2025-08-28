@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import CurrentListProvider from "./contexts/CurrentListProvider";
 
 import Header from "./components/Header";
