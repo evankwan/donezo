@@ -1,5 +1,4 @@
 #!/bin/sh
-
 npm run format
 
 if [ $? -ne 0 ]; then
