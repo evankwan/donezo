@@ -6,7 +6,7 @@ import { TodoStatus } from "../types/todo";
 import type { Todo } from "../types/todo";
 
 const Form = () => {
-  const { todos, setTodos } = useTodosProvider();
+  const { todos, addTodo } = useTodosProvider();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [nextTodoId, setNextTodoId] = useState(() => {
@@ -29,9 +29,7 @@ const Form = () => {
       name: inputRef.current.value,
       status: TodoStatus.OPEN,
     };
-
-    const newTodos: Todo[] = [...todos, newTodo];
-    await setTodos(newTodos);
+    await addTodo(newTodo);
     setNextTodoId(nextTodoId + 1);
     resetTodoInput();
   };

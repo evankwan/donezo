@@ -1,13 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
+
+type Callback<T> = (prev: T) => T;
 
 export default function useLocalStorage<T>(
   key: string,
   defaultValue: T,
-): [state: T, setter: (val: T) => T | undefined, getter: () => T | undefined] {
+): [
+  state: T,
+  setter: (val: T | Callback<T>) => T | undefined,
+  getter: () => T | undefined,
+] {
   const _getValue = (): T => {
     try {
       const item = window.localStorage.getItem(key);
-      console.log("from ls hook state init", item);
       if (item) {
         const state = JSON.parse(item);
         return state;
@@ -23,15 +28,20 @@ export default function useLocalStorage<T>(
   });
   const getValue = () => {
     const value = _getValue();
-    console.log("from ls hook getValue", value);
-    if (value) setStoredValue(value);
+    if (value) {
+      setStoredValue(value);
+    }
     return value;
   };
 
-  const setValue = (value: T): T | undefined => {
+  const setValue = (value: T | Callback<T>): T | undefined => {
+    let newValue = value;
     try {
-      window.localStorage.setItem(key, JSON.stringify(value));
-      setStoredValue(value); // called second so we only update UI if saving is successful, mimicking API behaviour
+      if (typeof newValue === "function") {
+        newValue = (value as Callback<T>)(storedValue);
+      }
+      window.localStorage.setItem(key, JSON.stringify(newValue));
+      setStoredValue(newValue); // called second so we only update UI if saving is successful, mimicking API behaviour
       return storedValue;
     } catch (error) {
       console.error(error);

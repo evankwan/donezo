@@ -10,3 +10,9 @@ export type Todo = {
   name: string;
   status: TodoStatus;
 };
+
+export type List = {
+  id: number;
+  name: string;
+  todos: Todo[];
+}

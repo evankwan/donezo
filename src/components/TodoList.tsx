@@ -5,7 +5,7 @@ import { useTodosProvider } from "../contexts/TodosProvider";
 import { type Todo, TodoStatus } from "../types/todo";
 
 const TodoList = () => {
-  const { todos, setTodos } = useTodosProvider();
+  const { todos, updateTodo } = useTodosProvider();
   const { isShowingCompletedItems } = useTodosProvider();
   const isTodoOpen = (todo: Todo) => todo.status === TodoStatus.OPEN;
 
@@ -18,7 +18,7 @@ const TodoList = () => {
     newTodos[todoIndexToUpdate].status = checked
       ? TodoStatus.COMPLETED
       : TodoStatus.OPEN;
-    await setTodos(newTodos);
+    await updateTodo(newTodos[todoIndexToUpdate]);
   };
 
   const todoListItems = todos
