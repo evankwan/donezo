@@ -8,8 +8,8 @@ export default function useTodosApi() {
   const [lists, _setLists, _getLists] = useLocalStorage<List[]>(
     TODO_STORAGE_KEY,
     [],
-  )
-  
+  );
+
   const getLists = async () => {
     let lists = _getLists();
     if (lists?.length === 0) {
@@ -18,25 +18,23 @@ export default function useTodosApi() {
           id: 0,
           name: "default",
           todos: [],
-        }
-      ])
+        },
+      ]);
     }
     return lists;
   };
 
-  const setLists = async(value: List[]) => {
+  const setLists = async (value: List[]) => {
     return _setLists(value);
-  }
+  };
 
-  const updateList = async(listId: List["id"], value: List) => {
+  const updateList = async (listId: List["id"], value: List) => {
     _setLists((prev: List[]): List[] => {
       return prev.map((list): List => {
-        return list.id === listId
-          ? value
-          : list
-      })
-    })
-  }
+        return list.id === listId ? value : list;
+      });
+    });
+  };
 
   return {
     lists,
