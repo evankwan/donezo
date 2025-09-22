@@ -15,14 +15,14 @@ const Form = () => {
 
   const calculateNextTodoId = () => {
     if (todos.length === 0) {
-      return 0
+      return 0;
     }
     return (todos as Todo[])[todos.length - 1].id + 1;
-  }
-  const [nextTodoId, setNextTodoId] = useState(calculateNextTodoId())
+  };
+  const [nextTodoId, setNextTodoId] = useState(calculateNextTodoId());
   useEffect(() => {
-    setNextTodoId(calculateNextTodoId())
-  }, [todos])
+    setNextTodoId(calculateNextTodoId());
+  }, [todos]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,11 +43,11 @@ const Form = () => {
         <input
           id="todo-input"
           value={todoForm.todo}
-          onChange={e => {
+          onChange={(e) => {
             setTodoForm({
               ...todoForm,
               todo: e.target.value,
-            })
+            });
           }}
           className="w-full border-b border-b-[#444] bg-none"
           placeholder="enter todo"

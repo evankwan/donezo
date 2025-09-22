@@ -63,14 +63,14 @@ const TodosProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     getLists();
   }, []);
-  
+
   const [currentList, setCurrentList] = useState<List>();
   useEffect(() => {
     if (!currentList) {
       setCurrentList(lists[0]);
     }
   }, [lists]);
-  
+
   const [todos, setTodos] = useState<Todo[]>([]);
   useEffect(() => {
     if (!currentList) {
