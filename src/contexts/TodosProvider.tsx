@@ -36,10 +36,7 @@ const TodosContext: React.Context<TodosContextValue> =
 const TodosProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [isShowingCompletedItems, setIsShowingCompletedItems] = useState(false);
   const { lists, getLists, setLists, updateList } = useTodosApi();
-  const [currentList, setCurrentList] = useState<List>();
-  const [todos, setTodos] = useState<Todo[]>([]);
 
   const addTodo = async (todo: Todo) => {
     if (!currentList) {
@@ -66,13 +63,15 @@ const TodosProvider: React.FC<{ children: React.ReactNode }> = ({
   useEffect(() => {
     getLists();
   }, []);
-
+  
+  const [currentList, setCurrentList] = useState<List>();
   useEffect(() => {
     if (!currentList) {
       setCurrentList(lists[0]);
     }
   }, [lists]);
-
+  
+  const [todos, setTodos] = useState<Todo[]>([]);
   useEffect(() => {
     if (!currentList) {
       return;
@@ -80,6 +79,8 @@ const TodosProvider: React.FC<{ children: React.ReactNode }> = ({
 
     setTodos(currentList.todos);
   }, [currentList]);
+
+  const [isShowingCompletedItems, setIsShowingCompletedItems] = useState(false);
 
   return (
     <TodosContext
