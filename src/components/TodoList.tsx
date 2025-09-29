@@ -26,7 +26,6 @@ const TodoList = () => {
   };
 
   const focusOnFirstCheckbox = () => {
-    console.log(firstCheckbox.current);
     if (firstCheckbox.current) {
       firstCheckbox.current.focus();
     }
