@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <Providers>
-        <div className="w-full h-full grid grid-cols-1 gap-4 !py-4">
+        <div className="w-full h-full grid grid-cols-1 gap-4 py-4 my-0 mx-auto">
           <Header />
           <Form />
           <TodoList />

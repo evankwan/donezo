@@ -5,6 +5,8 @@ import { useTodosProvider } from "../contexts/TodosProvider";
 import { TodoStatus } from "../types/todo";
 import type { Todo } from "../types/todo";
 
+import "./Form.css";
+
 const Form = () => {
   const { todos, addTodo } = useTodosProvider();
   const [todoForm, setTodoForm] = useState({
@@ -38,20 +40,22 @@ const Form = () => {
   };
 
   return (
-    <div className="p-4 w-full col-span-full">
+    <div className="w-full col-span-full">
       <form className="w-full" onSubmit={handleSubmit}>
-        <input
-          id="todo-input"
-          value={todoForm.todo}
-          onChange={(e) => {
-            setTodoForm({
-              ...todoForm,
-              todo: e.target.value,
-            });
-          }}
-          className="w-full border-b border-b-[#444] bg-none"
-          placeholder="enter todo"
-        />
+        <div className="focus-border relative w-full">
+          <input
+            id="todo-input"
+            value={todoForm.todo}
+            onChange={(e) => {
+              setTodoForm({
+                ...todoForm,
+                todo: e.target.value,
+              });
+            }}
+            className="w-full border-b-2 border-b-[#444] bg-none focus-visible:outline-none"
+            placeholder="enter todo"
+          />
+        </div>
       </form>
     </div>
   );

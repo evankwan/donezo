@@ -1,3 +1,5 @@
+import { useRef } from "react";
+
 import Checkbox from "./Checkbox.tsx";
 
 import { useTodosProvider } from "../contexts/TodosProvider";
@@ -8,6 +10,8 @@ const TodoList = () => {
   const { todos, updateTodo } = useTodosProvider();
   const { isShowingCompletedItems } = useTodosProvider();
   const isTodoOpen = (todo: Todo) => todo.status === TodoStatus.OPEN;
+
+  const firstCheckbox = useRef<HTMLLabelElement>(null);
 
   const toggleTodoStatus = async (
     idToUpdate: number,
@@ -21,20 +25,37 @@ const TodoList = () => {
     await updateTodo(newTodos[todoIndexToUpdate]);
   };
 
+  const focusOnFirstCheckbox = () => {
+    console.log(firstCheckbox.current);
+    if (firstCheckbox.current) {
+      firstCheckbox.current.focus();
+    }
+  };
+
+  const handleToDoStatusChange = async (
+    idToUpdate: number,
+    checked: boolean,
+  ) => {
+    await toggleTodoStatus(idToUpdate, checked);
+    focusOnFirstCheckbox();
+  };
+
   const todoListItems = todos
     .filter((todo: Todo) => (isShowingCompletedItems ? true : isTodoOpen(todo)))
     .sort((_: Todo, b: Todo) =>
       isShowingCompletedItems ? (isTodoOpen(b) ? 1 : -1) : 1,
     )
-    .map((todo: Todo) => {
+    .map((todo: Todo, index: number) => {
       return (
         <li
           key={todo.id}
           className="w-full flex flex-row gap-2 justify-start items-center"
         >
           <Checkbox
+            ref={index === 0 ? firstCheckbox : null}
+            className="todo-checkbox"
             checked={todo.status === TodoStatus.COMPLETED}
-            onChange={(checked) => toggleTodoStatus(todo.id, checked)}
+            onChange={(checked) => handleToDoStatusChange(todo.id, checked)}
           />
           <p className="w-full truncate">{todo.name}</p>
         </li>
