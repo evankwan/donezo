@@ -48,7 +48,13 @@ const TodoList = () => {
       return (
         <li
           key={todo.id}
-          className="w-full flex flex-row gap-2 justify-start items-center"
+          className="w-full flex flex-row gap-2 justify-start items-center cursor-pointer"
+          onClick={() =>
+            handleToDoStatusChange(
+              todo.id,
+              todo.status !== TodoStatus.COMPLETED,
+            )
+          }
         >
           <Checkbox
             ref={index === 0 ? firstCheckbox : null}
