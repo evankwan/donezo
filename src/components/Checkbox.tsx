@@ -6,11 +6,8 @@ interface Props {
   className?: string;
 }
 
-const Checkbox: React.FC<Props> = React.forwardRef<HTMLLabelElement, Props>(
-  (
-    { checked, onChange, className = "" },
-    ref: React.ForwardedRef<HTMLLabelElement>,
-  ) => {
+const Checkbox = React.forwardRef<HTMLLabelElement, Props>(
+  ({ checked, onChange, className = "" }, ref) => {
     const id = useId();
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
