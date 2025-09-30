@@ -44,12 +44,14 @@ const TodoList = () => {
       ...prevState,
       [id]: true,
     }));
+    await sleep(ANIMATION_LENGTH_IN_MS);
   };
   const removeCompletedAnimation = async (id: number) => {
     setAnimationMap((prevState) => ({
       ...prevState,
       [id]: false,
     }));
+    await sleep(ANIMATION_LENGTH_IN_MS);
   };
   const handleToDoStatusChange = async (
     idToUpdate: number,
@@ -57,11 +59,12 @@ const TodoList = () => {
   ) => {
     if (checked) {
       await runCompletedAnimation(idToUpdate);
+      await toggleTodoStatus(idToUpdate, checked);
     } else {
+      // reverse the order so that we can smoothly run the undoing animation
+      await toggleTodoStatus(idToUpdate, checked);
       await removeCompletedAnimation(idToUpdate);
     }
-    await sleep(ANIMATION_LENGTH_IN_MS);
-    await toggleTodoStatus(idToUpdate, checked);
     focusOnFirstCheckbox();
   };
 
