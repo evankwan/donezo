@@ -1,0 +1,27 @@
+:root {
+  --animation-length: 0.5s;
+}
+
+.todo-item::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 100%;
+  max-width: 0%;
+  background: #333;
+  top: calc(50% - 0.5px);
+  left: 0;
+  transition: max-width var(--animation-length) ease;
+}
+
+.todo-item.checked::after {
+  max-width: 100%;
+}
+
+.todo-item > .todo-text {
+  transition: opacity var(--animation-length) ease;
+}
+
+.todo-item.checked > .todo-text {
+  opacity: 0.5;
+}

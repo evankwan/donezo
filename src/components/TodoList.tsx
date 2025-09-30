@@ -1,10 +1,16 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import Checkbox from "./Checkbox.tsx";
 
 import { useTodosProvider } from "../contexts/TodosProvider";
 
 import { type Todo, TodoStatus } from "../types/todo";
+
+import { sleep } from "../utils";
+
+import "./TodoList.css";
+
+const ANIMATION_LENGTH_IN_MS = 500;
 
 const TodoList = () => {
   const { todos, updateTodo } = useTodosProvider();
@@ -31,10 +37,30 @@ const TodoList = () => {
     }
   };
 
+  const [animationMap, setAnimationMap] = useState<Record<number, boolean>>({});
+
+  const runCompletedAnimation = async (id: number) => {
+    setAnimationMap((prevState) => ({
+      ...prevState,
+      [id]: true,
+    }));
+  };
+  const removeCompletedAnimation = async (id: number) => {
+    setAnimationMap((prevState) => ({
+      ...prevState,
+      [id]: false,
+    }));
+  };
   const handleToDoStatusChange = async (
     idToUpdate: number,
     checked: boolean,
   ) => {
+    if (checked) {
+      await runCompletedAnimation(idToUpdate);
+    } else {
+      await removeCompletedAnimation(idToUpdate);
+    }
+    await sleep(ANIMATION_LENGTH_IN_MS);
     await toggleTodoStatus(idToUpdate, checked);
     focusOnFirstCheckbox();
   };
@@ -48,13 +74,7 @@ const TodoList = () => {
       return (
         <li
           key={todo.id}
-          className="w-full flex flex-row gap-2 justify-start items-center cursor-pointer"
-          onClick={() =>
-            handleToDoStatusChange(
-              todo.id,
-              todo.status !== TodoStatus.COMPLETED,
-            )
-          }
+          className={`w-full flex flex-row gap-2 justify-start items-center todo-item relative ${(animationMap[todo.id] || todo.status === TodoStatus.COMPLETED) && "checked"}`}
         >
           <Checkbox
             ref={index === 0 ? firstCheckbox : null}
@@ -62,7 +82,7 @@ const TodoList = () => {
             checked={todo.status === TodoStatus.COMPLETED}
             onChange={(checked) => handleToDoStatusChange(todo.id, checked)}
           />
-          <p className="w-full truncate">{todo.name}</p>
+          <p className="w-full truncate todo-text">{todo.name}</p>
         </li>
       );
     });
