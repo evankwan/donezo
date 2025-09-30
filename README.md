@@ -4,11 +4,9 @@
 
 ## To come (not necessarily in this order)
 
-- add sub-lists
 - animations when completing an item
+- add sub-lists
 - edit existing todo items
-- modify structure of code to support api interface
-- better styling
 - tests
 - favicon
 - bundling and stuff
