@@ -21,8 +21,9 @@ const Checkbox = React.forwardRef<HTMLLabelElement, Props>(
       <label
         ref={ref}
         htmlFor={id}
+        // i don't love the tabindex altering but i think this is fine for labels/inputs
         tabIndex={0}
-        className={`inline-flex items-center cursor-pointer  focus-visible:outline hover:outline outline-[#999] rounded outline-offset-[-3px] cursor-pointer ${className}`}
+        className={`inline-flex items-center cursor-pointer focus-visible:outline hover:outline outline-[#999] rounded outline-offset-[-3px] cursor-pointer ${className}`}
         onKeyDown={handleKeyDown}
       >
         <input
@@ -51,6 +52,7 @@ const Checkbox = React.forwardRef<HTMLLabelElement, Props>(
             </svg>
           )}
         </span>
+        {/* would it be better to allow children to be added here so all text can be included in the label? */}
       </label>
     );
   },

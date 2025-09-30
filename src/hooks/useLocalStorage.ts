@@ -19,6 +19,7 @@ export default function useLocalStorage<T>(
       }
       return defaultValue;
     } catch (error) {
+      // this goes for all error handling here, this would be a good place for bubbling up the error so it can be captured by any frontend monitoring tool like sentry, but i'm not using anything here so we're just going to log it in the console
       console.error(error);
       return defaultValue;
     }

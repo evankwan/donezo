@@ -18,6 +18,8 @@ const Form = () => {
 
   const resetTodoInput = () => setTodoForm({ todo: "" });
 
+  // this could be fragile if the todos state ever excludes completed todos, this might be better from the provider instead so it's coming closer from the source and can be easily updated if the todos state calc ever changes, but this works for now
+  // done in a function instead of a state so it always accesses the latest todo state to determine, preventing this number from getting out of sync. this could cause some problems if the todos state ever gets sorted (but it probably should never get sorted in place)
   const calculateNextTodoId = () => {
     if (todos.length === 0) {
       return 0;
@@ -47,6 +49,7 @@ const Form = () => {
   const validateForm = (): boolean => {
     let isValid = true;
 
+    // yes, there's only one input, but this is how the form would be validated if there were multiple, so i did the validation like this for extensibility
     if (!isValidInput(todoForm.todo)) {
       isValid = false;
     }
@@ -64,6 +67,7 @@ const Form = () => {
       }));
       return;
     }
+
     const newTodo: Todo = {
       id: nextTodoId,
       name: todoForm.todo.trim(),

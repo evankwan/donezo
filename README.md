@@ -4,7 +4,7 @@
 
 ## To come (not necessarily in this order)
 
-- animations when completing an item
+- add stuff explaining the demo
 - add sub-lists
 - edit existing todo items
 - tests

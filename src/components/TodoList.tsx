@@ -13,8 +13,7 @@ import "./TodoList.css";
 const ANIMATION_LENGTH_IN_MS = 500;
 
 const TodoList = () => {
-  const { todos, updateTodo } = useTodosProvider();
-  const { isShowingCompletedItems } = useTodosProvider();
+  const { todos, updateTodo, isShowingCompletedItems } = useTodosProvider();
   const isTodoOpen = (todo: Todo) => todo.status === TodoStatus.OPEN;
 
   const firstCheckbox = useRef<HTMLLabelElement>(null);
@@ -32,9 +31,7 @@ const TodoList = () => {
   };
 
   const focusOnFirstCheckbox = () => {
-    if (firstCheckbox.current) {
-      firstCheckbox.current.focus();
-    }
+    firstCheckbox.current?.focus();
   };
 
   const [animationMap, setAnimationMap] = useState<Record<number, boolean>>({});
@@ -61,7 +58,7 @@ const TodoList = () => {
       await runCompletedAnimation(idToUpdate);
       await toggleTodoStatus(idToUpdate, checked);
     } else {
-      // reverse the order so that we can smoothly run the undoing animation
+      // reverse the order so that when we remove the completed animation class that the todo is already listed as completed. otherwise there is a delay of ANIMATION_LENGTH_IN_MS before the animation runs and it's a little janky
       await toggleTodoStatus(idToUpdate, checked);
       await removeCompletedAnimation(idToUpdate);
     }
@@ -78,6 +75,7 @@ const TodoList = () => {
         <li
           key={todo.id}
           className={`w-full flex flex-row gap-2 justify-start items-center todo-item relative ${(animationMap[todo.id] || todo.status === TodoStatus.COMPLETED) && "checked"}`}
+          // i originally had a click event on this li as well so clicking on the p would also trigger the change, but it created some funkiness with triggering the event many times, so i've removed for now
         >
           <Checkbox
             ref={index === 0 ? firstCheckbox : null}

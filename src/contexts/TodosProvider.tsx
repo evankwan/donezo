@@ -79,6 +79,7 @@ const TodosProvider: React.FC<{ children: React.ReactNode }> = ({
 
     setTodos(currentList.todos);
   }, [currentList]);
+  // i don't love this useEffect chain that trickles changes down across all the different states. i'd like to find a better way to do this in the future but this is what works for now
 
   const [isShowingCompletedItems, setIsShowingCompletedItems] = useState(false);
 
