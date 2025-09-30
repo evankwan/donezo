@@ -82,7 +82,9 @@ const TodoList = () => {
           <Checkbox
             ref={index === 0 ? firstCheckbox : null}
             className="todo-checkbox"
-            checked={todo.status === TodoStatus.COMPLETED}
+            checked={
+              animationMap[todo.id] || todo.status === TodoStatus.COMPLETED
+            }
             onChange={(checked) => handleToDoStatusChange(todo.id, checked)}
           />
           <p className="w-full truncate todo-text">{todo.name}</p>
